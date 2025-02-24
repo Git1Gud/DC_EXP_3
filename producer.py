@@ -1,7 +1,7 @@
 import pika
 from alert_level import get_alert_level
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.1.11'))
 channel = connection.channel()
 
 queues = ['low', 'medium', 'high']
@@ -15,7 +15,7 @@ messages = {
     alert: message
 }
 
-for queue, message in messages.items():
+for queue, message in messages.items(): # creates tupples of the key value in dict
     channel.basic_publish(exchange='',
                           routing_key=queue,
                           body=message)

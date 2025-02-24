@@ -1,11 +1,20 @@
 import os
 from groq import Groq
+from dotenv import load_dotenv
 
 def get_alert_level(message):
     """Classifies an alert message into 'low', 'medium', or 'high' using Groq API."""
     
+    load_dotenv()  # Load environment variables from .env file
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise ValueError("GROQ_API_KEY is not set. Check your .env file.")
+    
+    # client = Groq(
+    #     api_key=os.environ.get("GROQ_API_KEY"),
+    # )
     client = Groq(
-        api_key=os.environ.get("GROQ_API_KEY"),
+        api_key=api_key,
     )
 
     chat_completion = client.chat.completions.create(
@@ -16,7 +25,7 @@ def get_alert_level(message):
             },
             {
                 "role": "user",
-                "content": f"Classify this alert message: {message}. Return only 'low', 'medium', or 'high'."
+                "content": f"Classify this alert message: {message}. Strictly return only 'low', 'medium', or 'high'."
             }
         ],
         model="llama-3.3-70b-versatile",

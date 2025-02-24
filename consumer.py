@@ -3,18 +3,18 @@ import sys
 import os
 
 OFFICER_ALERT_MAP = {
-    "Alice": "low",
-    "Bob": "medium",
-    "Charlie": "high"
+    "Aryan": "low",
+    "Aroosh": "medium",
+    "Talha": "high"
 }
 
 def main():
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='192.168.1.11'))
     channel = connection.channel()
 
     officer_name = ""
     while officer_name == "" or officer_name not in OFFICER_ALERT_MAP:
-        officer_name = input("Enter the officer name (Alice, Bob, Charlie): ")
+        officer_name = input("Enter the officer name (Aryan, Aroosh, Talha): ")
 
     queue_name = OFFICER_ALERT_MAP[officer_name]
     print(f" [*] {officer_name} is assigned to '{queue_name}' queue")
